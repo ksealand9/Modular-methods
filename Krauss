@@ -1,0 +1,36 @@
+// Input: Elliptic curve E defined over Q, and a prime p
+// Output: Trace of Frobenius a_p
+
+// Define an elliptic curve E
+E := EllipticCurve([a1, a2, a3, a4, a6]);
+
+// Define the prime p
+p := 23;
+
+q := NextPrime(p);  // Start with the first prime greater than p
+
+while (q mod p ne 1) do
+    q := NextPrime(q);  // Check the next prime
+end while;
+
+// Output the result
+q;
+
+
+// Check if p is a good prime (i.e., E has good reduction at p)
+N := Conductor(E);
+if p mod N eq 0 then
+    // E has bad reduction at p
+    bad_red := LocalInformation(E, p);
+    if bad_red[1] eq "additive" then
+        a_p := 0; // a_p = 0 for additive reduction
+    elif bad_red[1] eq "split multiplicative" or bad_red[1] eq "non-split multiplicative" then
+        a_p := 1; // a_p = ±1 for multiplicative reduction
+    end if;
+else
+    // E has good reduction at p, compute the number of points modulo p
+    a_p := TraceOfFrobenius(E, p);
+end if;
+
+// Output the result
+a_p;
