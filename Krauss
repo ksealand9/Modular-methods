@@ -37,9 +37,14 @@ end for;
 // Output all solutions
 //solutions;
 
+E1:=;
+
 // Define an elliptic curve E
 for i in [1..#solutions] do
-    E := EllipticCurve([0, 0, 4*solutions[1][1], 2*solutions[1][3], 0]);
+    x:=solutions[i][1];
+    //y:=solutions[i][2];
+    z:=solutions[i][3];
+    E := EllipticCurve([0, 0, 4*x, 2*z, 0]);
     TraceOfFrobenius(E,q);
 end for;
 
